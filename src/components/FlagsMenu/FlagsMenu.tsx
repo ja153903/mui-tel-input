@@ -1,5 +1,6 @@
 import React from 'react'
 import FlagsList from '@components/FlagsList/FlagsList'
+import FlagsListAutoComplete from '@components/FlagsListAutoComplete/FlagsListAutoComplete'
 import Menu, { MenuProps } from '@mui/material/Menu'
 import type { MuiTelInputContinent } from '@shared/constants/continents'
 import { MuiTelInputCountry } from '@shared/constants/countries'
@@ -13,6 +14,7 @@ export type FlagsMenuProps = Partial<MenuProps> & {
   langOfCountryName?: string
   continents?: MuiTelInputContinent[]
   onSelectCountry: (isoCode: MuiTelInputCountry) => void
+  searchCountries?: boolean
 }
 
 const FlagsMenu = (props: FlagsMenuProps) => {
@@ -26,6 +28,7 @@ const FlagsMenu = (props: FlagsMenuProps) => {
     continents,
     preferredCountries,
     className,
+    searchCountries,
     ...rest
   } = props
 
@@ -42,15 +45,27 @@ const FlagsMenu = (props: FlagsMenuProps) => {
       }}
       {...rest}
     >
-      <FlagsList
-        onlyCountries={onlyCountries}
-        excludedCountries={excludedCountries}
-        preferredCountries={preferredCountries}
-        continents={continents}
-        isoCode={isoCode}
-        langOfCountryName={langOfCountryName}
-        onSelectCountry={onSelectCountry}
-      />
+      {searchCountries ? (
+        <FlagsListAutoComplete
+          onlyCountries={onlyCountries}
+          excludedCountries={excludedCountries}
+          preferredCountries={preferredCountries}
+          continents={continents}
+          isoCode={isoCode}
+          langOfCountryName={langOfCountryName}
+          onSelectCountry={onSelectCountry}
+        />
+      ) : (
+        <FlagsList
+          onlyCountries={onlyCountries}
+          excludedCountries={excludedCountries}
+          preferredCountries={preferredCountries}
+          continents={continents}
+          isoCode={isoCode}
+          langOfCountryName={langOfCountryName}
+          onSelectCountry={onSelectCountry}
+        />
+      )}
     </Menu>
   )
 }
@@ -60,7 +75,8 @@ FlagsMenu.defaultProps = {
   excludedCountries: [],
   continents: [],
   preferredCountries: [],
-  langOfCountryName: DEFAULT_LANG
+  langOfCountryName: DEFAULT_LANG,
+  searchCountries: false
 }
 
 export default FlagsMenu

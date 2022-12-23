@@ -55,6 +55,7 @@ const MuiTelInput = React.forwardRef(
       preferredCountries,
       MenuProps,
       className,
+      searchCountries,
       ...restTextFieldProps
     } = props
     const textFieldRef = React.useRef<HTMLDivElement>(null)
@@ -204,6 +205,7 @@ const MuiTelInput = React.forwardRef(
             onClose={handleCloseFlagsMenu}
             langOfCountryName={langOfCountryName}
             onSelectCountry={handleChangeCountry}
+            searchCountries={searchCountries}
             {...MenuProps}
           />
         ) : null}
